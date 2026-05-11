@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Krunal Portfolio</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+    rel="stylesheet" />
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    /* LIGHT THEME */
+    :root {
+      --bg: #F7F4EF;
+      --bg2: #F0EDE6;
+      --paper: #FDFCF8;
+      --cork: #C9A86C;
+      --cork2: #B8965A;
+      --line: #DDD8CF;
+      --line2: #C8C2B8;
+      --txt: #1C1A16;
+      --txt2: #4A4740;
+      --txt3: #8A8680;
+      --txt4: #B8B4AE;
+      --red: #B5472A;
+      --green: #3A6E52;
+      --pin: #C04030;
+      --nav: 56px;
+      --serif: 'Playfair Display', Georgia, serif;
+      --body: 'Lora', Georgia, serif;
+      --mono: 'Courier Prime', 'Courier New', monospace;
+      --shadow: rgba(0, 0, 0, .15);
+    }
+
+    /* DARK THEME */
+    [data-theme="dark"] {
+      --bg: #0F0E0C;
+      --bg2: #161410;
+      --paper: #1C1A16;
+      --cork: #7A5A2E;
+      --cork2: #6A4A20;
+      --line: #2A2820;
+      --line2: #3A3830;
+      --txt: #F0EDE6;
+      --txt2: #B8B4AE;
+      --txt3: #6A6660;
+      --txt4: #3A3830;
+      --red: #D4614A;
+      --green: #4A8E6A;
+      --pin: #D04040;
+      --shadow: rgba(0, 0, 0, .5);
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--txt);
+      font-family: var(--body);
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background .3s, color .3s
+    }
+
+    ::selection {
+      background: var(--txt);
+      color: var(--bg)
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg2)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--line2)
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 0
+      }
+
+      50% {
+        opacity: 1
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    @keyframes chatIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes pinDrop {
+      from {
+        opacity: 0;
+        transform: translateY(-10px) rotate(var(--rot))
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) rotate(var(--rot))
+      }
+    }
+
+    .fadeUp {
+      animation: fadeUp .5s ease both
+    }
+
+    .d1 {
+      animation-delay: .05s
+    }
+
+    .d2 {
+      animation-delay: .12s
+    }
+
+    .d3 {
+      animation-delay: .19s
+    }
+
+    .d4 {
+      animation-delay: .26s
+    }
+
+    .d5 {
+      animation-delay: .33s
+    }
+
+    .fadeIn {
+      animation: fadeIn .35s ease both
+    }
+
+    .scribble {
+      display: inline;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 8'%3E%3Cpath d='M2 5 Q75 1 150 5 Q225 9 298 4' stroke='%23B5472A' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: bottom center;
+      background-size: 100% 8px;
+      padding-bottom: 6px;
+    }
+
+    .stamp {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border: 1.5px solid var(--line2);
+      color: var(--txt3);
+      background: var(--paper);
+      display: inline-block;
+      line-height: 1.6;
+    }
+
+    .stamp-red {
+      border-color: var(--red);
+      color: var(--red)
+    }
+
+    .stamp-green {
+      border-color: var(--green);
+      color: var(--green)
+    }
+
+    .sec-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--txt3)
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--line);
+      width: 100%;
+      margin: 0
+    }
+
+    .corkboard {
+      background-color: var(--cork);
+      background-image: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, .07) 0%, transparent 45%), radial-gradient(circle at 80% 70%, rgba(0, 0, 0, .06) 0%, transparent 45%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Ccircle cx='1' cy='1' r='.4' fill='rgba(0,0,0,.08)'/%3E%3C/svg%3E");
+      padding: 40px 28px 44px;
+      border: 3px solid #A07840;
+      box-shadow: inset 0 0 60px rgba(0, 0, 0, .12), 0 4px 20px rgba(0, 0, 0, .15);
+      position: relative;
+    }
+
+    .paper-card {
+      background: var(--paper);
+      box-shadow: 3px 4px 12px var(--shadow), 0 1px 3px rgba(0, 0, 0, .1);
+      padding: 20px 18px 18px;
+      position: relative;
+      cursor: pointer;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .paper-card::before {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--pin);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .4), inset 0 1px 2px rgba(255, 255, 255, .3);
+      z-index: 2;
+    }
+
+    .paper-card:hover {
+      box-shadow: 5px 8px 24px rgba(0, 0, 0, .28), 0 2px 4px rgba(0, 0, 0, .12);
+      z-index: 10;
+    }
+
+    .tl-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--txt);
+      border: 2px solid var(--bg);
+      flex-shrink: 0
+    }
+
+    .chat-user {
+      background: var(--txt);
+      color: var(--bg);
+      padding: 12px 16px;
+      align-self: flex-end;
+      max-width: 78%;
+      border-radius: 2px
+    }
+
+    .chat-ai {
+      background: var(--paper);
+      color: var(--txt);
+      border: 1px solid var(--line);
+      padding: 12px 16px;
+      max-width: 88%;
+      border-radius: 2px
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: var(--txt);
+      color: var(--bg);
+      border: none;
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+
+    .btn:hover {
+      opacity: .78
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--txt);
+      border: 1.5px solid var(--txt)
+    }
+
+    .btn-ghost:hover {
+      background: var(--txt);
+      color: var(--bg)
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      background: var(--line);
+      border: 1.5px solid var(--line2);
+      border-radius: 20px;
+      width: 44px;
+      height: 24px;
+      cursor: pointer;
+      position: relative;
+      transition: background .25s;
+      display: flex;
+      align-items: center;
+      padding: 3px;
+    }
+
+    .theme-toggle-knob {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--txt);
+      transition: transform .25s;
+      font-size: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [data-theme="dark"] .theme-toggle-knob {
+      transform: translateX(20px)
+    }
+
+    @media print {
+      .no-print {
+        display: none !important
+      }
+
+      body {
+        background: #fff;
+        color: #000
+      }
+
+      .resume-article {
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 32px !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useCallback } = React;
+
+    /* ─── THEME ─── */
+    function useTheme() {
+      const [dark, setDark] = useState(() => {
+        try { return localStorage.getItem("theme") === "dark" } catch { return true }
+      });
+      useEffect(() => {
+        document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+        try { localStorage.setItem("theme", dark ? "dark" : "light") } catch { }
+      }, [dark]);
+      return [dark, setDark];
+    }
+
+    /* ─── DATA ─── */
+    const PAPERS = [
+      {
+        id: 1, tag: "TRANSFORMERS", venue: "NeurIPS '17", year: "2017",
+        title: "The Emergence of General Intelligence",
+        authors: "Kunal Sundersia",
+        abstract: "Sparks of AGI Thesis and Post-GPT-4 Developmental Trajectories.",
+        detail: `The Transformer introduced a radically simpler architecture for sequence modeling. Where RNNs process tokens one by one and CNNs operate on local windows, the Transformer attends to every position simultaneously via multi-head self-attention.\n\nKey contributions:\n— Multi-head attention allows the model to attend to information from different representation subspaces simultaneously.\n— Positional encodings replace the sequential bias of RNNs, allowing full parallelism during training.\n— The encoder-decoder structure with cross-attention became the template for seq2seq tasks.\n\nWhy it matters:\nEvery major LLM today — GPT, Claude, Gemini, LLaMA — is a Transformer or a direct derivative. The architecture scaled in ways nobody predicted in 2017. Arguably the most consequential ML paper of the past decade.\n\nMy take:\nWhat strikes me most is the elegance of replacing complex sequential computation with a simple attention formula. The authors removed a constraint (sequential processing) that everyone assumed was necessary, and the field hasn't looked back.`,
+        links: ["https://research-papaer-1.vercel.app/"], rot: -2
+      },
+      {
+        id: 2, tag: "ALIGNMENT", venue: "NeurIPS '20", year: "2020",
+        title: "The Architecture of Constitutional AI",
+        authors: "Kunal Sundersia",
+        abstract: "Principles, Self-Supervision, and the Evolution of Scalable Alignment",
+        detail: `This paper operationalized RLHF at scale for the first time on a real NLP task. The goal: train a summarization model that humans actually prefer, not one that maximizes log-likelihood on reference summaries.\n\nThe pipeline:\n— Collect human preference comparisons between model-generated summaries.\n— Train a reward model to predict which summary humans prefer.\n— Fine-tune the policy using PPO to maximize the learned reward.\n\nResults:\nThe RLHF-trained model dramatically outperformed supervised fine-tuning even when the SFT model was larger. Human evaluators preferred the RLHF outputs ~70% of the time.\n\nWhy it matters:\nThis is the direct ancestor of InstructGPT and ChatGPT. The same pipeline, scaled up, is what makes modern assistants actually useful.\n\nMy take:\nThe most important finding is negative — log-likelihood is a bad proxy for human preference. Building the infrastructure to capture what humans actually want is the core challenge of alignment.`,
+        links: ["https://researchpaper-2.vercel.app/"], rot: 2.5
+      },
+    ];
+
+    const PROJECTS = [
+      {
+        id: 1, title: "AGIOAS", status: "live", year: "2024",
+        tech: ["React", "GPT-4", "AST", "TypeScript"],
+        desc: "Visual environment where you describe logic in plain English and the system compiles it to runnable code.",
+        detail: "NeuralScript started from a frustration: the gap between having an idea and having working code is still too wide, even with LLMs.\n\nEach block is parsed into an AST node using GPT-4 with structured output. The AST is type-checked and dependency-resolved before code generation. A local sandbox executes the output and streams results back into the canvas. Errors surface as visual overlays on the failing block, not stack traces.",
+        metrics: ["2.3k stars", "140+ users", "12ms avg compile"],
+        links: ["github.com/aryan/neuralscript", "neuralscript.dev"]
+      },
+      {
+        id: 2, title: "Binance future trader", status: "live", year: "2025",
+        tech: ["Next.js", "pgvector", "Embeddings", "PostgreSQL"],
+        desc: "Personal knowledge graph that auto-links notes, bookmarks, and highlights via semantic similarity.",
+        detail: "Memex is named after Vannevar Bush's 1945 vision of a memory extender. Every piece of content you consume gets embedded and stored. Notes, bookmarks, highlights, PDFs — everything lives in one semantic space.\n\nBuilt on pgvector for similarity search at the database layer, with chunked embeddings with parent-child retrieval for long documents, and a graph view that renders semantic clusters as explorable constellations.",
+        metrics: ["8k notes indexed", "<50ms search", "94% recall"],
+        links: ["github.com/aryan/memex", "memex.aryan.dev"]
+      },
+      {
+        id: 3, title: "Cypto trader performance analysis", status: "beta", year: "2025",
+        tech: ["Chrome API", "Claude", "IndexedDB", "TypeScript"],
+        desc: "Browser extension with a persistent AI sidebar on every page — summarize, translate, quiz yourself, or dive deeper on any selected text.",
+        detail: "The sidebar activates on any selection and offers summarize, explain, quiz, extend, and translate modes. All conversation history stored in IndexedDB, never leaves the device. Streaming responses so the sidebar feels alive. Custom chunking that respects paragraph and sentence boundaries.",
+        metrics: ["Beta: 340 users", "Avg session: 18min", "5 modes"],
+        links: ["github.com/aryan/contextlens"]
+      },
+      {
+        id: 4, title: "FarmerEats", status: "live", year: "2023",
+        tech: ["Python", "D3.js", "Pandas", "FastAPI"],
+        desc: "Turns raw CSV and JSON into publication-quality narrative reports with auto-generated charts and executive summaries.",
+        detail: "DataNarrator solves a specific pain point: data analysts spend 60-70% of their time on report formatting and narrative, not analysis.\n\nAutomatic chart selection based on data shape. Natural language narrative that describes what the charts show. Executive summary that leads with findings. Configurable templates for different report types.",
+        metrics: ["500+ reports", "<90s generation", "500MB limit"],
+        links: ["github.com/aryan/datnarrator", "datanarrator.aryan.dev"]
+      },
+      {
+        id: 5, title: "HealthCare", status: "live", year: "2024",
+        tech: ["Electron", "Tauri", "SQLite", "Rust"],
+        desc: "Distraction-free writing studio with ambient audio, Pomodoro timer, AI writing coach, and automatic daily reflection digests.",
+        detail: "FlowState is my most personal project. Minimal editor with typewriter mode, ambient soundscapes that adapt to writing pace, an AI writing coach that waits to be asked and never interrupts, and Pomodoro sessions with automatic daily logs.\n\nBuilt with Tauri for native performance with a tiny footprint — <8MB installed.",
+        metrics: ["Daily active use", "<8MB install", "Rust backend"],
+        links: ["github.com/aryan/flowstate", "flowstate.aryan.dev"]
+      },
+    ];
+
+    const SKILLS = [
+      { cat: "Languages", items: ["Python", "TypeScript", "JavaScript", "C++", "HTML / CSS"] },
+      { cat: "Frameworks", items: ["React", "node.js", "FastAPI", "Django", "Flask"] },
+      { cat: "Tools & DBs", items: ["Git", "Docker", "PostgreSQL", "Redis", "MongoDB", "SQLite"] },
+      { cat: "Advance tools", items: ["Machine learning", "API Development", "AI Agent Development"] }
+    ];
+
+    const UPCOMING = [
+      { title: "AgentOS", tag: "AI INFRA", eta: "Q3 2025", desc: "An orchestration layer for coordinating multiple specialized AI agents on long-horizon tasks." },
+      { title: "EchoVault", tag: "PRIVACY", eta: "Q4 2025", desc: "End-to-end encrypted, offline-first personal AI that learns preferences without sending data to the cloud." },
+      { title: "SketchReason", tag: "MULTIMODAL", eta: "2026", desc: "Draw diagrams and have AI reason over your whiteboard sketches in real time." },
+    ];
+
+    const WORK = [
+      {
+        company: "AGIOAS", role: "CEO & Project Lead", period: "NOV 2025 – Current", loc: "",
+        points: ["Spearheaded the development of a multi-simulator AI platform, architecting a complex ecosystem featuring an AI-driven Boardroom, VC Pitch Arena, and Shadow Customer modules.", "Architected and migrated the core backend infrastructure from FastAPI to Django, implementing a robust, scalable system to support multi-agent simulations and real-time data processing.", "Designed high-fidelity 3D user environments using React Three Fiber and Three.js, creating a 'cinematic' and premium executive interface for business strategy simulations.", "Led the full product lifecycle, from conceptualizing 'Second-Order Thinking' AI logic to managing DevOps, SSL certification, and deployment across custom high-level domains."]
+      },
+      {
+        company: "PARUL UNIVERSITY", role: "Software Development and Database Intern", period: "Apr 2026 – Current", loc: "",
+        points: ["Architecting and managing enterprise-level database systems to support university-wide data infrastructure, ensuring high availability and data integrity.", "Developing full-stack applications and internal tools under the direct supervision of the Dean to streamline institutional workflows and digital operations.", "Optimizing SQL queries and database schemas to handle large-scale datasets, significantly improving performance and reducing retrieval latency.", "Implementing secure backend logic and RESTful APIs to facilitate seamless communication between administrative frontends and core data repositories."]
+      },
+      {
+        company: "PARUL UNIVERSITY", role: "Placement Coordinator", period: "1 Apr 2026 – 30 Apr 2026", loc: "",
+        points: ["Facilitated recruitment drives by acting as the primary liaison between the university and corporate HR departments, securing placement opportunities for a diverse student body.", "Coordinated high-stakes logistics for on-campus and virtual hiring events, managing schedules, technical infrastructure, and interview pipelines for multiple companies simultaneously."]
+      },
+    ];
+
+    const serif = { fontFamily: "'Playfair Display',Georgia,serif" };
+    const mono = { fontFamily: "'Courier Prime','Courier New',monospace" };
+    const body = { fontFamily: "'Lora',Georgia,serif" };
+
+    function Dot({ color = "var(--txt4)" }) {
+      return <span style={{ width: 8, height: 8, borderRadius: "50%", background: color, display: "inline-block", flexShrink: 0 }} />;
+    }
+    function Stamp({ children, variant = "" }) {
+      return <span className={`stamp${variant ? " stamp-" + variant : ""}`}>{children}</span>;
+    }
+
+    /* ─── THEME TOGGLE ─── */
+    function ThemeToggle({ dark, setDark }) {
+      return (
+        <button className="theme-toggle" onClick={() => setDark(d => !d)} title="Toggle theme">
+          <div className="theme-toggle-knob">{dark ? "☀" : "🌙"}</div>
+        </button>
+      );
+    }
+
+    /* ─── NAVBAR ─── */
+    function Navbar({ onNav, page, dark, setDark }) {
+      const [sc, setSc] = useState(false);
+      useEffect(() => {
+        const h = () => setSc(window.scrollY > 20);
+        window.addEventListener("scroll", h); return () => window.removeEventListener("scroll", h);
+      }, []);
+      const go = id => { onNav("home"); setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 50) };
+      return (
+        <nav style={{
+          position: "fixed", top: 0, left: 0, right: 0, zIndex: 999, height: "var(--nav)",
+          background: sc || page !== "home" ? "rgba(var(--bg-rgb,247,244,239),.95)" : "transparent",
+          backgroundColor: sc || page !== "home" ? (dark ? "rgba(15,14,12,.95)" : "rgba(247,244,239,.95)") : "transparent",
+          backdropFilter: sc || page !== "home" ? "blur(8px)" : "none",
+          borderBottom: `1px solid ${sc || page !== "home" ? "var(--line)" : "transparent"}`,
+          transition: "background .25s,border-color .25s"
+        }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 36px", height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <button onClick={() => go("home")} style={{ background: "none", border: "none", cursor: "pointer", ...serif, fontSize: 17, fontWeight: 700, color: "var(--txt)", letterSpacing: "-0.3px" }}>
+              Krunal Sundersia
+            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+              {[["research", "Research"], ["projects", "Projects"], ["work", "Work"], ["skills", "Skills"]].map(([id, lbl]) => (
+                <button key={id} onClick={() => go(id)} style={{ background: "none", border: "none", cursor: "pointer", ...mono, fontSize: 10, letterSpacing: "1.4px", textTransform: "uppercase", color: "var(--txt3)", transition: "color .12s" }}
+                  onMouseEnter={e => e.target.style.color = "var(--txt)"}
+                  onMouseLeave={e => e.target.style.color = "var(--txt3)"}>{lbl}</button>
+              ))}
+              <ThemeToggle dark={dark} setDark={setDark} />
+              <button onClick={() => onNav("resume")} style={{ ...mono, fontSize: 10, letterSpacing: "1.4px", textTransform: "uppercase", background: "var(--txt)", color: "var(--bg)", border: "none", padding: "7px 16px", cursor: "pointer", transition: "opacity .15s" }}
+                onMouseEnter={e => e.currentTarget.style.opacity = ".75"}
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>Resume ↗</button>
+            </div>
+          </div>
+        </nav>
+      );
+    }
+
+    /* ─── TYPEWRITER ─── */
+    function useTW(words, speed = 68, pause = 2200) {
+      const [idx, setIdx] = useState(0); const [ch, setCh] = useState(0); const [del, setDel] = useState(false); const [txt, setTxt] = useState("");
+      useEffect(() => {
+        const w = words[idx];
+        if (!del && ch <= w.length) { const t = setTimeout(() => { setTxt(w.slice(0, ch)); setCh(c => c + 1) }, speed); return () => clearTimeout(t); }
+        if (!del && ch > w.length) { const t = setTimeout(() => setDel(true), pause); return () => clearTimeout(t); }
+        if (del && ch >= 0) { const t = setTimeout(() => { setTxt(w.slice(0, ch)); setCh(c => c - 1) }, speed / 2.2); return () => clearTimeout(t); }
+        if (del && ch < 0) { setDel(false); setCh(0); setIdx(i => (i + 1) % words.length); }
+      }, [ch, del, idx]);
+      return txt;
+    }
+
+    /* ─── AI CHAT ─── */
+    function AIChat({ initialQ = "" }) {
+      const [q, setQ] = useState("");
+      const [msgs, setMsgs] = useState([]);
+      const [loading, setLoading] = useState(false);
+      const [history, setHistory] = useState([]);
+      const endRef = useRef(null);
+      const active = msgs.length > 0 || loading;
+
+      const call = useCallback(async (question, hist = []) => {
+        setLoading(true);
+        const sysMsg = { role: "user", content: `[SYSTEM: You are Krunal Sundersia's AI assistant on his portfolio. Answer questions about him — his AI research interests (Transformers, RLHF, CoT, Constitutional AI), his projects (AGIOAS, Binance future trader, Crypto trader performance analysis, FarmerEats, HealthCare), his work experience (CEO at AGIOAS, intern at Parul University), or general AI/ML topics. Be concise, insightful, and direct. Write in plain paragraphs only — no markdown, no bullet symbols, no dashes.]\n\n${question}` };
+        const messages = [...hist, sysMsg];
+        try {
+          const r = await fetch("https://api.anthropic.com/v1/messages", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 600, messages })
+          });
+          const d = await r.json();
+          const text = d.content?.map(c => c.text || "").join("") || "Couldn't get a response.";
+          const newHist = [...hist, { role: "user", content: question }, { role: "assistant", content: text }];
+          setHistory(newHist);
+          setMsgs(m => [...m, { role: "ai", text }]);
+        } catch {
+          setMsgs(m => [...m, { role: "ai", text: "Connection error. Please try again." }]);
+        }
+        setLoading(false);
+      }, []);
+
+      useEffect(() => { if (initialQ) { setMsgs([{ role: "user", text: initialQ }]); call(initialQ, []); } }, [initialQ]);
+      useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [msgs, loading]);
+
+      const send = () => {
+        const text = q.trim(); if (!text) return;
+        setQ(""); setMsgs(m => [...m, { role: "user", text }]);
+        call(text, history);
+      };
+
+      return (
+        <div style={{ border: "1.5px solid var(--line2)", background: active ? "var(--paper)" : "var(--bg2)", display: "flex", flexDirection: "column", height: active ? "100%" : "auto", minHeight: active ? 420 : 0, transition: "min-height .3s" }}>
+          <div style={{ borderBottom: "1px solid var(--line)", padding: "14px 18px", display: "flex", alignItems: "center", gap: 10 }}>
+            <Dot color="var(--green)" />
+            <span style={{ ...mono, fontSize: 10, letterSpacing: "1.5px", textTransform: "uppercase", color: "var(--txt3)" }}>Ask me anything</span>
+            {loading && <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", marginLeft: "auto" }}>thinking…</span>}
+          </div>
+          {active && (
+            <div style={{ flex: 1, overflowY: "auto", padding: "20px 18px", display: "flex", flexDirection: "column", gap: 14 }}>
+              {msgs.map((m, i) => (
+                <div key={i} style={{ animation: "chatIn .3s ease both" }}>
+                  {m.role === "user"
+                    ? <div className="chat-user" style={{ ...body, fontSize: 13, lineHeight: 1.75, alignSelf: "flex-end", marginLeft: "auto" }}>{m.text}</div>
+                    : <div className="chat-ai" style={{ ...body, fontSize: 13, lineHeight: 1.85, fontWeight: 300 }}>{m.text}</div>
+                  }
+                </div>
+              ))}
+              {loading && (
+                <div className="chat-ai" style={{ display: "flex", gap: 5, alignItems: "center", height: 36 }}>
+                  {[0, 1, 2].map(i => <span key={i} style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--txt3)", display: "inline-block", animation: `blink 1.3s ${i * .22}s step-end infinite` }} />)}
+                </div>
+              )}
+              <div ref={endRef} />
+            </div>
+          )}
+          <div style={{ padding: "14px 18px", borderTop: active ? "1px solid var(--line)" : "none", display: "flex", gap: 10, alignItems: "center", background: active ? "var(--bg2)" : "transparent" }}>
+            <input value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => e.key === "Enter" && send()}
+              placeholder={active ? "follow-up question…" : "what are you working on? what's your research focus?"}
+              style={{ flex: 1, background: "transparent", border: "none", borderBottom: "1px solid var(--line2)", outline: "none", ...mono, fontSize: 12, color: "var(--txt)", padding: "6px 2px", lineHeight: 1.5 }}
+            />
+            <button onClick={send} style={{ ...mono, fontSize: 9, letterSpacing: "1.5px", textTransform: "uppercase", background: "var(--txt)", color: "var(--bg)", border: "none", padding: "9px 16px", cursor: "pointer", flexShrink: 0, transition: "opacity .15s", whiteSpace: "nowrap" }}
+              onMouseEnter={e => e.currentTarget.style.opacity = ".75"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>Send →</button>
+          </div>
+        </div>
+      );
+    }
+
+    /* ─── HERO ─── */
+    function Hero() {
+      const tw = useTW(["AI Researcher", "Systems Builder", "Open-Source Author", "Deep Thinker"]);
+      return (
+        <section id="home" style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "calc(var(--nav) + 60px) 36px 72px", background: "var(--bg)", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px)", backgroundSize: "56px 56px", opacity: .35, pointerEvents: "none" }} />
+          <div style={{ maxWidth: 1120, margin: "0 auto", width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center", position: "relative", zIndex: 1 }}>
+            <div>
+              <div className="fadeUp d1" style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 40 }}>
+                <Dot color="var(--green)" />
+                <span style={{ ...mono, fontSize: 10, letterSpacing: "1.8px", textTransform: "uppercase", color: "var(--txt3)" }}>Open to collaboration · 2025</span>
+              </div>
+              <h1 className="fadeUp d2" style={{ ...serif, fontSize: "clamp(3.5rem,7vw,5.8rem)", fontWeight: 700, color: "var(--txt)", lineHeight: .95, letterSpacing: "-2px", marginBottom: 28 }}>
+                Krunal<br /><em style={{ fontStyle: "italic", fontWeight: 400 }}>Sundersia</em>
+              </h1>
+              <div className="fadeUp d2" style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24, height: 28 }}>
+                <span style={{ ...mono, fontSize: 14, color: "var(--red)" }}>_</span>
+                <span style={{ ...mono, fontSize: 13, color: "var(--txt2)" }}>{tw}</span>
+                <span style={{ ...mono, fontSize: 14, color: "var(--txt3)", animation: "blink 1s step-end infinite" }}>|</span>
+              </div>
+              <p className="fadeUp d3" style={{ ...body, fontSize: 14, color: "var(--txt2)", maxWidth: 400, lineHeight: 1.85, marginBottom: 44, fontWeight: 300 }}>
+                I build AI systems that augment human cognition and research the intersection of reasoning, alignment, and engineering. Based in New Delhi.
+              </p>
+              <div className="fadeUp d4" style={{ borderLeft: "2px solid var(--line2)", paddingLeft: 18, marginBottom: 44, maxWidth: 420 }}>
+                <p style={{ ...body, fontSize: 12.5, fontStyle: "italic", color: "var(--txt2)", lineHeight: 1.9, marginBottom: 6 }}>
+                  "The universe is under no obligation to make sense to you. But it will, if you ask it the right questions."
+                </p>
+                <span style={{ ...mono, fontSize: 9, letterSpacing: "1.5px", textTransform: "uppercase", color: "var(--txt4)" }}>— Neil deGrasse Tyson</span>
+              </div>
+              <div className="fadeUp d5" style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+                {[["GitHub", "#"], ["Twitter", "#"], ["LinkedIn", "#"], ["Scholar", "#"], ["hey@krunal.dev", "mailto:hey@krunal.dev"]].map(([n, h]) => (
+                  <a key={n} href={h} style={{ ...mono, fontSize: 9, letterSpacing: "1.5px", textTransform: "uppercase", color: "var(--txt3)", textDecoration: "none", borderBottom: "1px solid transparent", transition: "color .12s,border-color .12s" }}
+                    onMouseEnter={e => { e.target.style.color = "var(--txt)"; e.target.style.borderColor = "var(--txt)" }}
+                    onMouseLeave={e => { e.target.style.color = "var(--txt3)"; e.target.style.borderColor = "transparent" }}>{n}</a>
+                ))}
+              </div>
+            </div>
+            <div className="fadeUp d4" style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+              <div style={{ ...mono, fontSize: 9, letterSpacing: "1.8px", textTransform: "uppercase", color: "var(--txt4)", marginBottom: 10, paddingLeft: 2 }}>// ai assistant</div>
+              <AIChat />
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    function Sec({ id, label, title, alt, children, extra = "" }) {
+      return (
+        <section id={id} style={{ background: alt ? "var(--bg2)" : "var(--bg)", borderTop: "1px solid var(--line)", padding: "88px 0" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 36px" }}>
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 52, flexWrap: "wrap", gap: 12 }}>
+              <div>
+                <div style={{ ...mono, fontSize: 10, letterSpacing: "2px", textTransform: "uppercase", color: "var(--txt3)", marginBottom: 10 }}>{label}</div>
+                <h2 style={{ ...serif, fontSize: "clamp(1.7rem,3.5vw,2.6rem)", fontWeight: 700, color: "var(--txt)", letterSpacing: "-0.8px", lineHeight: 1.05 }}>{title}</h2>
+              </div>
+              {extra && <span style={{ ...mono, fontSize: 10, color: "var(--txt4)", letterSpacing: "0.8px" }}>{extra}</span>}
+            </div>
+            {children}
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── RESEARCH BOARD ─── */
+    function ResearchBoard({ onPaper }) {
+      const rots = [-2, 2.5, -1.5, 3, -2.5];
+      return (
+        <Sec id="research" label="// research" title="Papers I Think About" extra="click any card to read notes">
+          <div className="corkboard" style={{ borderRadius: 3 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 32 }}>
+              {PAPERS.map((p, i) => (
+                <div key={p.id} className="paper-card"
+                  style={{ transform: `rotate(${rots[i % rots.length]}deg)`, animationDelay: `${i * .07}s`, '--rot': `${rots[i % rots.length]}deg` }}
+                  onClick={() => onPaper(p)}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "rotate(0deg) translateY(-4px)" }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = `rotate(${rots[i % rots.length]}deg)` }}>
+                  <div style={{ marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 6 }}>
+                    <Stamp>{p.tag}</Stamp>
+                    <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", letterSpacing: "0.8px" }}>{p.venue}</span>
+                  </div>
+                  <p style={{ ...serif, fontSize: 13, fontWeight: 700, color: "var(--txt)", lineHeight: 1.35, marginBottom: 8 }}>{p.title}</p>
+                  <p style={{ ...body, fontSize: 11, color: "var(--txt3)", lineHeight: 1.7, fontStyle: "italic", marginBottom: 12, fontWeight: 300 }}>{p.abstract.slice(0, 100)}…</p>
+                  <p style={{ ...mono, fontSize: 9, color: "var(--txt4)", letterSpacing: "0.5px" }}>{p.authors.split(",").slice(0, 3).join(", ")}{p.authors.split(",").length > 3 ? " et al." : ""}</p>
+                  <div style={{ marginTop: 12, paddingTop: 10, borderTop: "1px dashed var(--line2)", display: "flex", justifyContent: "flex-end" }}>
+                    <span style={{ ...mono, fontSize: 8, color: "var(--red)", letterSpacing: "1.5px", textTransform: "uppercase" }}>Read notes →</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ position: "absolute", bottom: 14, right: 20, ...mono, fontSize: 9, color: "rgba(0,0,0,.25)", letterSpacing: "1.5px", textTransform: "uppercase" }}>
+              Reading board · {new Date().getFullYear()}
+            </div>
+          </div>
+        </Sec>
+      );
+    }
+
+    /* ─── PROJECTS ─── */
+    function Projects({ onProject }) {
+      const [hov, setHov] = useState(null);
+      const statColor = s => s === "live" ? "var(--green)" : s === "beta" ? "#A07030" : "var(--txt4)";
+      return (
+        <Sec id="projects" label="// projects" title="Things I've Built" alt>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 0, border: "1.5px solid var(--line2)" }}>
+            {PROJECTS.map((p, i) => (
+              <div key={p.id}
+                style={{
+                  padding: "26px 24px", borderRight: i % 3 < 2 ? "1.5px solid var(--line2)" : "none", borderBottom: i < 3 ? "1.5px solid var(--line2)" : "none",
+                  background: hov === p.id ? "var(--bg)" : "var(--paper)", transition: "background .18s", cursor: "pointer", display: "flex", flexDirection: "column", gap: 14
+                }}
+                onMouseEnter={() => setHov(p.id)} onMouseLeave={() => setHov(null)}
+                onClick={() => onProject(p)}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
+                  <span style={{ ...serif, fontSize: 15, fontWeight: 700, color: "var(--txt)", lineHeight: 1.2 }}>{p.title}</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 5, flexShrink: 0, marginTop: 2 }}>
+                    <Dot color={statColor(p.status)} />
+                    <span style={{ ...mono, fontSize: 9, letterSpacing: "1px", textTransform: "uppercase", color: "var(--txt4)" }}>{p.status}</span>
+                  </div>
+                </div>
+                <p style={{ ...body, fontSize: 12.5, color: "var(--txt2)", lineHeight: 1.8, flex: 1, fontWeight: 300 }}>{p.desc}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {p.tech.slice(0, 3).map(t => <Stamp key={t}>{t}</Stamp>)}
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 10, borderTop: "1px solid var(--line)" }}>
+                  <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", letterSpacing: "0.8px" }}>{p.year}</span>
+                  <span style={{ ...mono, fontSize: 9, color: hov === p.id ? "var(--red)" : "var(--txt4)", letterSpacing: "1.2px", textTransform: "uppercase", transition: "color .15s" }}>View →</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Sec>
+      );
+    }
+
+    /* ─── SKILLS ─── */
+    function Skills() {
+      return (
+        <Sec id="skills" label="// skills" title="Tools of the Trade">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 0, border: "1.5px solid var(--line2)" }}>
+            {SKILLS.map((s, i) => (
+              <div key={s.cat} style={{ padding: "28px 26px", borderRight: i < SKILLS.length - 1 ? "1.5px solid var(--line2)" : "none" }}>
+                <div style={{ ...mono, fontSize: 9, letterSpacing: "2px", textTransform: "uppercase", color: "var(--txt3)", marginBottom: 20, display: "flex", alignItems: "center", gap: 10 }}>
+                  {s.cat}<span style={{ flex: 1, height: 1, background: "var(--line)", display: "block" }} />
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {s.items.map((item, j) => (
+                    <div key={item} style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                      <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", minWidth: 20 }}>{String(j + 1).padStart(2, "0")}</span>
+                      <span style={{ ...body, fontSize: 13, color: "var(--txt2)" }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Sec>
+      );
+    }
+
+    /* ─── UPCOMING ─── */
+    function Upcoming() {
+      return (
+        <Sec id="upcoming" label="// upcoming" title="What's Being Built" alt extra="estimated timelines">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+            {UPCOMING.map(p => (
+              <div key={p.title} style={{ border: "1.5px dashed var(--line2)", padding: "24px 22px", background: "var(--bg)", display: "flex", flexDirection: "column", gap: 12 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <Stamp>{p.tag}</Stamp>
+                  <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", letterSpacing: "0.8px" }}>eta {p.eta}</span>
+                </div>
+                <p style={{ ...serif, fontSize: 15, fontWeight: 700, color: "var(--txt)" }}>{p.title}</p>
+                <p style={{ ...body, fontSize: 12.5, color: "var(--txt2)", lineHeight: 1.8, flex: 1, fontWeight: 300 }}>{p.desc}</p>
+                <div style={{ paddingTop: 10, borderTop: "1px dashed var(--line)" }}>
+                  <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", letterSpacing: "1px", display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", border: "1.5px dashed var(--txt4)", display: "inline-block" }} />
+                    In progress
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Sec>
+      );
+    }
+
+    /* ─── WORK ─── */
+    function WorkSection() {
+      const [open, setOpen] = useState(null);
+      return (
+        <Sec id="work" label="// experience" title="Where I've Worked">
+          <div style={{ position: "relative", paddingLeft: 28 }}>
+            <div style={{ position: "absolute", left: 0, top: 8, bottom: 8, width: 1, background: "var(--line2)" }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+              {WORK.map((w, i) => (
+                <div key={w.company + i} style={{ position: "relative", paddingLeft: 24, paddingBottom: i < WORK.length - 1 ? 44 : 0 }}>
+                  <div style={{ position: "absolute", left: -4, top: 7, width: 9, height: 9, borderRadius: "50%", background: "var(--txt)", border: "2px solid var(--bg)" }} />
+                  <div style={{ border: "1px solid var(--line)", background: "var(--paper)", cursor: "pointer", overflow: "hidden" }}
+                    onClick={() => setOpen(open === i ? null : i)}>
+                    <div style={{ padding: "20px 24px", display: "grid", gridTemplateColumns: "1fr auto", gap: 12, alignItems: "center" }}
+                      onMouseEnter={e => e.currentTarget.parentElement.style.background = "var(--bg2)"}
+                      onMouseLeave={e => e.currentTarget.parentElement.style.background = "var(--paper)"}>
+                      <div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6, flexWrap: "wrap" }}>
+                          <span style={{ ...serif, fontSize: 15, fontWeight: 700, color: "var(--txt)" }}>{w.company}</span>
+                          <Stamp>{w.role}</Stamp>
+                        </div>
+                        <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                          <span style={{ ...mono, fontSize: 10, color: "var(--txt3)", letterSpacing: "0.5px" }}>{w.period}</span>
+                          <span style={{ ...mono, fontSize: 10, color: "var(--txt4)" }}>{w.loc}</span>
+                        </div>
+                      </div>
+                      <span style={{ ...mono, fontSize: 11, color: "var(--txt3)", transition: "transform .2s", display: "block", transform: open === i ? "rotate(180deg)" : "none" }}>▾</span>
+                    </div>
+                    {open === i && (
+                      <div style={{ padding: "0 24px 20px", animation: "fadeIn .2s ease" }}>
+                        <div style={{ height: 1, background: "var(--line)", marginBottom: 16 }} />
+                        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                          {w.points.map((pt, j) => (
+                            <div key={j} style={{ display: "grid", gridTemplateColumns: "16px 1fr", gap: 10, alignItems: "start" }}>
+                              <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", paddingTop: 3 }}>0{j + 1}</span>
+                              <p style={{ ...body, fontSize: 12.5, color: "var(--txt2)", lineHeight: 1.8, fontWeight: 300 }}>{pt}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Sec>
+      );
+    }
+
+    /* ─── RESUME CTA ─── */
+    function ResumeSection({ onResume }) {
+      return (
+        <section style={{ background: "var(--txt)", padding: "72px 0", borderTop: "1px solid var(--line)" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 36px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 32, flexWrap: "wrap" }}>
+            <div>
+              <h2 style={{ ...serif, fontSize: "clamp(1.6rem,3vw,2.2rem)", fontWeight: 700, color: "var(--bg)", marginBottom: 10, letterSpacing: "-0.5px" }}>Want the full picture?</h2>
+              <p style={{ ...body, fontSize: 13, color: "rgba(247,244,239,.6)", fontWeight: 300, maxWidth: 460, lineHeight: 1.75 }}>
+                Résumé, publications, references and a longer bio — all in one place. Updated regularly.
+              </p>
+            </div>
+            <button onClick={onResume}
+              style={{ ...mono, fontSize: 11, letterSpacing: "2px", textTransform: "uppercase", background: "var(--bg)", color: "var(--txt)", border: "none", padding: "14px 32px", cursor: "pointer", flexShrink: 0, transition: "opacity .15s" }}
+              onMouseEnter={e => e.currentTarget.style.opacity = ".8"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>View Résumé →</button>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── FOOTER ─── */
+    function Footer() {
+      return (
+        <footer style={{ borderTop: "1px solid var(--line)", padding: "28px 0", background: "var(--bg)" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 36px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 14 }}>
+            <span style={{ ...serif, fontSize: 14, fontWeight: 600, color: "var(--txt2)", letterSpacing: "-0.2px" }}>Krunal Sundersia · 2025</span>
+            <div style={{ display: "flex", gap: 20 }}>
+              {["GitHub", "Twitter", "LinkedIn", "Scholar"].map(n => (
+                <span key={n} style={{ ...mono, fontSize: 9, color: "var(--txt4)", letterSpacing: "1.2px", textTransform: "uppercase" }}>{n}</span>
+              ))}
+            </div>
+            <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", letterSpacing: "0.8px" }}>Built with care, 2025</span>
+          </div>
+        </footer>
+      );
+    }
+
+    /* ─── BACK BAR ─── */
+    function BackBar({ onBack, label }) {
+      return (
+        <div style={{ borderBottom: "1px solid var(--line)", background: "var(--bg2)", padding: "0 36px", height: 44, display: "flex", alignItems: "center", gap: 6, position: "sticky", top: "var(--nav)", zIndex: 10 }}>
+          <button onClick={onBack} style={{ ...mono, fontSize: 10, color: "var(--txt3)", background: "none", border: "none", cursor: "pointer", letterSpacing: "0.8px", transition: "color .12s" }}
+            onMouseEnter={e => e.target.style.color = "var(--txt)"}
+            onMouseLeave={e => e.target.style.color = "var(--txt3)"}>← Back</button>
+          <span style={{ ...mono, fontSize: 10, color: "var(--txt4)", margin: "0 4px" }}>/</span>
+          <span style={{ ...mono, fontSize: 10, color: "var(--txt)", letterSpacing: "0.8px" }}>{label}</span>
+        </div>
+      );
+    }
+
+    /* ─── PAPER DETAIL ─── */
+    function PaperDetail({ paper, onBack }) {
+      useEffect(() => window.scrollTo(0, 0), []);
+
+      const openPaper = (url) => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      };
+
+      return (
+        <div className="fadeIn" style={{ minHeight: "100vh", background: "var(--bg)", paddingTop: "var(--nav)" }}>
+          <BackBar onBack={onBack} label={paper.title} />
+          <div style={{ maxWidth: 740, margin: "0 auto", padding: "60px 36px 100px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 20 }}>
+              <Stamp>{paper.tag}</Stamp>
+              <span style={{ ...mono, fontSize: 10, color: "var(--txt3)", letterSpacing: "0.8px", alignSelf: "center" }}>{paper.venue} · {paper.year}</span>
+            </div>
+            <h1 style={{ ...serif, fontSize: "clamp(1.5rem,3.5vw,2.4rem)", fontWeight: 700, color: "var(--txt)", lineHeight: 1.15, marginBottom: 20, letterSpacing: "-0.5px" }}>{paper.title}</h1>
+            <p style={{ ...mono, fontSize: 11, color: "var(--txt3)", lineHeight: 1.8, marginBottom: 32 }}>{paper.authors}</p>
+            <div style={{ borderLeft: "3px solid var(--line2)", paddingLeft: 20, marginBottom: 36 }}>
+              <p style={{ ...body, fontSize: 13.5, fontStyle: "italic", color: "var(--txt2)", lineHeight: 1.9, fontWeight: 300 }}>{paper.abstract}</p>
+            </div>
+            <div style={{ height: 1, background: "var(--line)", marginBottom: 36 }} />
+            {paper.detail.split("\n\n").map((para, i) => {
+              if (para.includes(":\n—")) {
+                const [head, ...lines] = para.split("\n");
+                return (
+                  <div key={i} style={{ marginBottom: 32 }}>
+                    <p style={{ ...mono, fontSize: 10, color: "var(--red)", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 14 }}>{head.replace(":", "")}</p>
+                    {lines.map((l, j) => l.startsWith("—")
+                      ? <div key={j} style={{ display: "grid", gridTemplateColumns: "2px 1fr", gap: 14, marginBottom: 10 }}>
+                        <div style={{ background: "var(--line2)" }} />
+                        <p style={{ ...body, fontSize: 13, color: "var(--txt2)", lineHeight: 1.85, fontWeight: 300 }}>{l.slice(1).trim()}</p>
+                      </div>
+                      : l.trim() ? <p key={j} style={{ ...body, fontSize: 13, color: "var(--txt2)", lineHeight: 1.85, marginBottom: 6, fontWeight: 300 }}>{l}</p> : null
+                    )}
+                  </div>
+                );
+              }
+              const isLabel = para.match(/^(Why it matters|My take|Results|Key claim|Controversy|Key variants):/);
+              if (isLabel) {
+                const [first, ...rest] = para.split("\n");
+                return (
+                  <div key={i} style={{ marginBottom: 28, padding: "18px 20px", background: "var(--bg2)", border: "1px solid var(--line)" }}>
+                    <p style={{ ...mono, fontSize: 10, color: "var(--red)", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 10 }}>{first.replace(":", "")}</p>
+                    {rest.map((l, j) => l.trim() ? <p key={j} style={{ ...body, fontSize: 13, color: "var(--txt2)", lineHeight: 1.85, fontWeight: 300 }}>{l}</p> : null)}
+                  </div>
+                );
+              }
+              return <p key={i} style={{ ...body, fontSize: 14, color: "var(--txt2)", lineHeight: 2, marginBottom: 22, fontWeight: 300 }}>{para}</p>;
+            })}
+            {paper.links?.length > 0 && (
+              <div style={{ marginTop: 40, paddingTop: 24, borderTop: "1px solid var(--line)" }}>
+                <span style={{ ...mono, fontSize: 10, color: "var(--txt3)", letterSpacing: "1.2px", textTransform: "uppercase", marginBottom: 16, display: "block" }}>Read Paper</span>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                  {paper.links.map(l => (
+                    <button key={l} onClick={() => openPaper(l)}
+                      style={{ ...mono, fontSize: 11, color: "var(--bg)", background: "var(--green)", border: "none", padding: "10px 22px", cursor: "pointer", letterSpacing: "1px", display: "flex", alignItems: "center", gap: 8, transition: "opacity .15s" }}
+                      onMouseEnter={e => e.currentTarget.style.opacity = ".8"}
+                      onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                      ↗ Open Research Paper
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    /* ─── PROJECT DETAIL ─── */
+    function ProjectDetail({ project, onBack }) {
+      useEffect(() => window.scrollTo(0, 0), []);
+      const statColor = s => s === "live" ? "var(--green)" : s === "beta" ? "#A07030" : "var(--txt4)";
+      return (
+        <div className="fadeIn" style={{ minHeight: "100vh", background: "var(--bg)", paddingTop: "var(--nav)" }}>
+          <BackBar onBack={onBack} label={project.title} />
+          <div style={{ maxWidth: 740, margin: "0 auto", padding: "60px 36px 100px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+              <Dot color={statColor(project.status)} />
+              <span style={{ ...mono, fontSize: 10, color: "var(--txt3)", letterSpacing: "1px", textTransform: "uppercase" }}>{project.status} · {project.year}</span>
+            </div>
+            <h1 style={{ ...serif, fontSize: "clamp(2rem,4vw,3rem)", fontWeight: 700, color: "var(--txt)", letterSpacing: "-1px", lineHeight: .95, marginBottom: 20 }}>{project.title}</h1>
+            <div style={{ borderLeft: "3px solid var(--line2)", paddingLeft: 20, marginBottom: 36 }}>
+              <p style={{ ...body, fontSize: 13.5, fontStyle: "italic", color: "var(--txt2)", lineHeight: 1.9, fontWeight: 300 }}>{project.desc}</p>
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 36 }}>
+              {project.tech.map(t => <Stamp key={t}>{t}</Stamp>)}
+            </div>
+            {project.metrics && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))", gap: 0, border: "1px solid var(--line)", marginBottom: 40 }}>
+                {project.metrics.map((m, i) => (
+                  <div key={i} style={{ padding: "16px 18px", borderRight: i < project.metrics.length - 1 ? "1px solid var(--line)" : "none" }}>
+                    <p style={{ ...serif, fontSize: 18, fontWeight: 700, color: "var(--txt)", marginBottom: 4 }}>{m.split(" ")[0]}</p>
+                    <p style={{ ...mono, fontSize: 9, color: "var(--txt3)", letterSpacing: "0.8px" }}>{m.split(" ").slice(1).join(" ")}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div style={{ height: 1, background: "var(--line)", marginBottom: 36 }} />
+            {project.detail.split("\n\n").map((para, i) =>
+              <p key={i} style={{ ...body, fontSize: 14, color: "var(--txt2)", lineHeight: 2, marginBottom: 22, fontWeight: 300 }}>{para}</p>
+            )}
+            {project.links?.length > 0 && (
+              <div style={{ marginTop: 36, paddingTop: 20, borderTop: "1px solid var(--line)" }}>
+                <span style={{ ...mono, fontSize: 10, color: "var(--txt3)", letterSpacing: "1.2px", textTransform: "uppercase", marginBottom: 12, display: "block" }}>Links</span>
+                {project.links.map(l => <a key={l} href={"https://" + l} target="_blank" rel="noopener noreferrer" style={{ ...mono, fontSize: 11, color: "var(--green)", display: "flex", alignItems: "center", gap: 6, marginBottom: 6, textDecoration: "none" }}>↗ {l}</a>)}
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    /* ─── RESUME PAGE (Article style) ─── */
+    function ResumePage({ onBack }) {
+      useEffect(() => window.scrollTo(0, 0), []);
+
+      const handlePrint = () => { window.print() };
+
+      const handleDownload = () => {
+        // Build a clean HTML string for download
+        const content = `
+Krunal Sundersia
+AI Researcher & Systems Engineer
+hey@krunal.dev | krunal.dev | github.com/aryan | New Delhi, India
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ABOUT
+I research and build at the intersection of AI reasoning, alignment, and engineering. I care deeply about understanding how language models work from first principles — and about building tools that make AI genuinely useful for human cognition.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXPERIENCE
+
+AGIOAS — CEO & Project Lead
+NOV 2025 – Current
+• Spearheaded the development of a multi-simulator AI platform, architecting a complex ecosystem featuring an AI-driven Boardroom, VC Pitch Arena, and Shadow Customer modules.
+• Architected and migrated the core backend infrastructure from FastAPI to Django, implementing a robust, scalable system to support multi-agent simulations and real-time data processing.
+• Designed high-fidelity 3D user environments using React Three Fiber and Three.js, creating a 'cinematic' and premium executive interface for business strategy simulations.
+• Led the full product lifecycle, from conceptualizing 'Second-Order Thinking' AI logic to managing DevOps, SSL certification, and deployment across custom high-level domains.
+
+PARUL UNIVERSITY — Software Development and Database Intern
+Apr 2026 – Current
+• Architecting and managing enterprise-level database systems to support university-wide data infrastructure.
+• Developing full-stack applications and internal tools under the direct supervision of the Dean.
+• Optimizing SQL queries and database schemas to handle large-scale datasets.
+• Implementing secure backend logic and RESTful APIs.
+
+PARUL UNIVERSITY — Placement Coordinator
+1 Apr 2026 – 30 Apr 2026
+• Facilitated recruitment drives as primary liaison between university and corporate HR departments.
+• Coordinated high-stakes logistics for on-campus and virtual hiring events.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SKILLS
+Languages: Python, TypeScript, JavaScript, C++, HTML/CSS
+Frameworks: React, Node.js, FastAPI, Django, Flask
+Tools & DBs: Git, Docker, PostgreSQL, Redis, MongoDB, SQLite
+Advanced: Machine Learning, API Development, AI Agent Development
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROJECTS
+• AGIOAS — Multi-simulator AI platform (React, GPT-4, AST, TypeScript)
+• Binance Future Trader — Semantic knowledge graph (Next.js, pgvector, PostgreSQL)
+• Crypto Trader Performance Analysis — AI browser extension (Chrome API, Claude, IndexedDB)
+• FarmerEats — Data narrative reports (Python, D3.js, Pandas, FastAPI)
+• HealthCare — Distraction-free writing studio (Electron, Tauri, SQLite, Rust)
+    `.trim();
+        const blob = new Blob([content], { type: "text/plain" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "Krunal_Sundersia_Resume.txt";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      };
+
+      return (
+        <div className="fadeIn" style={{ minHeight: "100vh", background: "var(--bg2)", paddingTop: "var(--nav)" }}>
+          <BackBar onBack={onBack} label="Résumé" />
+
+          {/* Download/Print actions */}
+          <div className="no-print" style={{ maxWidth: 860, margin: "0 auto", padding: "28px 36px 0", display: "flex", gap: 12, justifyContent: "flex-end" }}>
+            <button onClick={handlePrint}
+              style={{ ...mono, fontSize: 10, letterSpacing: "1.5px", textTransform: "uppercase", background: "transparent", color: "var(--txt)", border: "1.5px solid var(--line2)", padding: "10px 20px", cursor: "pointer", transition: "all .15s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--line)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
+              ⎙ Print
+            </button>
+            <button onClick={handleDownload}
+              style={{ ...mono, fontSize: 10, letterSpacing: "1.5px", textTransform: "uppercase", background: "var(--txt)", color: "var(--bg)", border: "none", padding: "10px 20px", cursor: "pointer", transition: "opacity .15s" }}
+              onMouseEnter={e => e.currentTarget.style.opacity = ".78"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+              ↓ Download .txt
+            </button>
+          </div>
+
+          {/* Article */}
+          <article className="resume-article" style={{ maxWidth: 860, margin: "28px auto 80px", background: "var(--paper)", boxShadow: `0 4px 40px var(--shadow)`, padding: "72px 80px" }}>
+
+            {/* Masthead */}
+            <header style={{ marginBottom: 52 }}>
+              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 24, flexWrap: "wrap", marginBottom: 24 }}>
+                <div>
+                  <h1 style={{ ...serif, fontSize: "clamp(2.4rem,5vw,3.6rem)", fontWeight: 700, color: "var(--txt)", letterSpacing: "-2px", lineHeight: .9, marginBottom: 12 }}>
+                    Krunal<br /><em style={{ fontWeight: 400, fontStyle: "italic" }}>Sundersia</em>
+                  </h1>
+                  <p style={{ ...body, fontSize: 15, color: "var(--txt3)", fontStyle: "italic", marginTop: 8 }}>AI Researcher & Systems Engineer</p>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-end" }}>
+                  {["hey@krunal.dev", "krunal.dev", "github.com/aryan", "New Delhi, India"].map(c => (
+                    <span key={c} style={{ ...mono, fontSize: 10, color: "var(--txt3)", letterSpacing: "0.5px" }}>{c}</span>
+                  ))}
+                </div>
+              </div>
+              <div style={{ height: 2, background: "var(--txt)", marginBottom: 0 }} />
+            </header>
+
+            {/* About */}
+            <ResArticleSection title="About">
+              <p style={{ ...body, fontSize: 14.5, color: "var(--txt2)", lineHeight: 2, fontWeight: 300 }}>
+                I research and build at the intersection of AI reasoning, alignment, and engineering. I care deeply about understanding how language models work from first principles — and about building tools that make AI genuinely useful for human cognition. I've led product and engineering at AGIOAS, interned at Parul University as a software and database engineer, and shipped multiple projects spanning AI agents, trading systems, and developer tooling.
+              </p>
+            </ResArticleSection>
+
+            {/* Experience */}
+            <ResArticleSection title="Experience">
+              {WORK.map((w, i) => (
+                <div key={i} style={{ marginBottom: i < WORK.length - 1 ? 40 : 0, paddingBottom: i < WORK.length - 1 ? 40 : 0, borderBottom: i < WORK.length - 1 ? "1px solid var(--line)" : "none" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8, marginBottom: 4 }}>
+                    <h3 style={{ ...serif, fontSize: 18, fontWeight: 700, color: "var(--txt)", letterSpacing: "-0.4px" }}>{w.company}</h3>
+                    <span style={{ ...mono, fontSize: 10, color: "var(--txt4)", letterSpacing: "0.5px", flexShrink: 0 }}>{w.period}</span>
+                  </div>
+                  <p style={{ ...mono, fontSize: 10, color: "var(--red)", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 16 }}>{w.role}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {w.points.map((pt, j) => (
+                      <div key={j} style={{ display: "grid", gridTemplateColumns: "20px 1fr", gap: 10, alignItems: "start" }}>
+                        <span style={{ ...mono, fontSize: 10, color: "var(--txt4)", paddingTop: 2, userSelect: "none" }}>→</span>
+                        <p style={{ ...body, fontSize: 13.5, color: "var(--txt2)", lineHeight: 1.85, fontWeight: 300 }}>{pt}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </ResArticleSection>
+
+            {/* Projects */}
+            <ResArticleSection title="Selected Projects">
+              <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+                {PROJECTS.map((p, i) => (
+                  <div key={p.id} style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 16, paddingBottom: i < PROJECTS.length - 1 ? 24 : 0, borderBottom: i < PROJECTS.length - 1 ? "1px dashed var(--line)" : "none" }}>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6, flexWrap: "wrap" }}>
+                        <span style={{ ...serif, fontSize: 15, fontWeight: 700, color: "var(--txt)" }}>{p.title}</span>
+                        <Stamp variant={p.status === "live" ? "green" : p.status === "beta" ? "" : ""}>
+                          {p.status}
+                        </Stamp>
+                        <span style={{ ...mono, fontSize: 9, color: "var(--txt4)" }}>{p.year}</span>
+                      </div>
+                      <p style={{ ...body, fontSize: 13, color: "var(--txt2)", lineHeight: 1.8, fontWeight: 300, marginBottom: 8 }}>{p.desc}</p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                        {p.tech.map(t => <Stamp key={t}>{t}</Stamp>)}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ResArticleSection>
+
+            {/* Skills */}
+            <ResArticleSection title="Skills" last>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {SKILLS.map(s => (
+                  <div key={s.cat} style={{ display: "grid", gridTemplateColumns: "160px 1fr", gap: 16, alignItems: "start" }}>
+                    <span style={{ ...mono, fontSize: 10, color: "var(--txt3)", letterSpacing: "1.2px", textTransform: "uppercase", paddingTop: 1 }}>{s.cat}</span>
+                    <p style={{ ...body, fontSize: 13.5, color: "var(--txt2)", lineHeight: 1.7 }}>{s.items.join("  ·  ")}</p>
+                  </div>
+                ))}
+              </div>
+            </ResArticleSection>
+
+            {/* Footer line */}
+            <div style={{ marginTop: 48, paddingTop: 20, borderTop: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+              <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", letterSpacing: "1px" }}>Krunal Sundersia · {new Date().getFullYear()}</span>
+              <span style={{ ...mono, fontSize: 9, color: "var(--txt4)", letterSpacing: "1px" }}>Updated regularly</span>
+            </div>
+          </article>
+        </div>
+      );
+    }
+
+    function ResArticleSection({ title, children, last = false }) {
+      return (
+        <div style={{ marginBottom: last ? 0 : 48, paddingBottom: last ? 0 : 48, borderBottom: last ? "none" : "1px solid var(--line)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
+            <h2 style={{ ...mono, fontSize: 10, letterSpacing: "2.5px", textTransform: "uppercase", color: "var(--red)", whiteSpace: "nowrap" }}>{title}</h2>
+            <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
+          </div>
+          {children}
+        </div>
+      );
+    }
+
+    /* ─── APP ─── */
+    function App() {
+      const [dark, setDark] = useTheme();
+      const [page, setPage] = useState({ type: "home" });
+      const goHome = () => setPage({ type: "home" });
+
+      if (page.type === "paper") return <><Navbar onNav={goHome} page="paper" dark={dark} setDark={setDark} /><PaperDetail paper={page.data} onBack={goHome} /></>;
+      if (page.type === "project") return <><Navbar onNav={goHome} page="project" dark={dark} setDark={setDark} /><ProjectDetail project={page.data} onBack={goHome} /></>;
+      if (page.type === "resume") return <><Navbar onNav={goHome} page="resume" dark={dark} setDark={setDark} /><ResumePage onBack={goHome} /></>;
+
+      return (
+        <>
+          <Navbar onNav={p => setPage({ type: p })} page="home" dark={dark} setDark={setDark} />
+          <Hero />
+          <ResearchBoard onPaper={p => setPage({ type: "paper", data: p })} />
+          <Projects onProject={p => setPage({ type: "project", data: p })} />
+          <Skills />
+          <Upcoming />
+          <WorkSection />
+          <ResumeSection onResume={() => setPage({ type: "resume" })} />
+          <Footer />
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+
+</html>
