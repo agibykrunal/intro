@@ -410,6 +410,13 @@
         detail: `This paper operationalized RLHF at scale for the first time on a real NLP task. The goal: train a summarization model that humans actually prefer, not one that maximizes log-likelihood on reference summaries.\n\nThe pipeline:\n— Collect human preference comparisons between model-generated summaries.\n— Train a reward model to predict which summary humans prefer.\n— Fine-tune the policy using PPO to maximize the learned reward.\n\nResults:\nThe RLHF-trained model dramatically outperformed supervised fine-tuning even when the SFT model was larger. Human evaluators preferred the RLHF outputs ~70% of the time.\n\nWhy it matters:\nThis is the direct ancestor of InstructGPT and ChatGPT. The same pipeline, scaled up, is what makes modern assistants actually useful.\n\nMy take:\nThe most important finding is negative — log-likelihood is a bad proxy for human preference. Building the infrastructure to capture what humans actually want is the core challenge of alignment.`,
         links: ["https://researchpaper-2.vercel.app/"], rot: 2.5
       },
+      {
+          id: 3, tag: "ALIGNMENT", venue: "NeurIPS '20", year: "2020",
+        title: "The Architecture of Artificial Affect",
+        authors: "Kunal Sundersia",
+        abstract: "Integrating Emotion, Homeostasis, and Consciousness in Computational Systems",
+        detail: `This paper operationalized RLHF at scale for the first time on a real NLP task. The goal: train a summarization model that humans actually prefer, not one that maximizes log-likelihood on reference summaries.\n\nThe pipeline:\n— Collect human preference comparisons between model-generated summaries.\n— Train a reward model to predict which summary humans prefer.\n— Fine-tune the policy using PPO to maximize the learned reward.\n\nResults:\nThe RLHF-trained model dramatically outperformed supervised fine-tuning even when the SFT model was larger. Human evaluators preferred the RLHF outputs ~70% of the time.\n\nWhy it matters:\nThis is the direct ancestor of InstructGPT and ChatGPT. The same pipeline, scaled up, is what makes modern assistants actually useful.\n\nMy take:\nThe most important finding is negative — log-likelihood is a bad proxy for human preference. Building the infrastructure to capture what humans actually want is the core challenge of alignment.`,
+        links: ["https://research-paper-3.vercel.app/"], rot: 7
     ];
 
     const PROJECTS = [
