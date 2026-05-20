@@ -379,7 +379,7 @@
   <script type="text/babel">
     const { useState, useEffect, useRef, useCallback } = React;
 
-    /* ─── THEME ─── */
+  
     function useTheme() {
       const [dark, setDark] = useState(() => {
         try { return localStorage.getItem("theme") === "dark" } catch { return true }
